@@ -66,48 +66,147 @@ These are pre-configured in the Docker setup.
 ## Getting Started
 
 ### Prerequisites
-- Docker
-- Docker Compose
 
-### Installation & Running
+#### For Docker Setup (Recommended)
+- Docker ([Install Docker](https://docs.docker.com/get-docker/))
+- Docker Compose (included with Docker Desktop)
 
-1. **Clone or navigate to the project directory:**
+#### For Local Development
+- Node.js 18+ ([Install Node.js](https://nodejs.org/))
+- MongoDB 6.0+ (local or Docker container)
+- npm (comes with Node.js)
+
+## Docker Setup (Recommended)
+
+### Quick Start - One Command
+
+```bash
+docker-compose up --build
+```
+
+**First run takes 5-10 minutes** (pulling images, installing dependencies, building apps, seeding database).
+
+### What Happens Automatically
+1. **MongoDB Container** starts with persistent volume storage
+2. **Database seeding** populates 6 sample products
+3. **Backend server** starts on port 5000
+4. **Frontend server** starts on port 3000 and is ready for use
+
+### Access the Application
+
+| Service | URL | Purpose |
+|---------|-----|---------|
+| Frontend | http://localhost:3000 | Shop interface |
+| Backend API | http://localhost:5000 | REST API |
+| API Health Check | http://localhost:5000/health | Service status |
+| MongoDB | localhost:27017 | Database |
+
+### Docker Commands Reference
+
+```bash
+# Start all services
+docker-compose up
+
+# Start in background (detached mode)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# View logs for specific service
+docker-compose logs -f backend
+docker-compose logs -f frontend
+docker-compose logs -f mongo
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes (clears database)
+docker-compose down -v
+
+# Rebuild images after code changes
+docker-compose up --build
+
+# Rebuild specific service
+docker-compose up --build backend
+```
+
+### Docker Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Docker Compose Network                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                               │
+│  ┌──────────────┐   ┌──────────────┐   ┌───────────────┐   │
+│  │   Frontend   │   │   Backend    │   │    MongoDB    │   │
+│  │ (Next.js)    │   │ (Express)    │   │     6.0       │   │
+│  │              │   │              │   │               │   │
+│  │ Port: 3000   │   │ Port: 5000   │   │ Port: 27017   │   │
+│  └──────────────┘   └──────────────┘   └───────────────┘   │
+│        ↓                    ↓                    ↑           │
+│   localhost:3000    localhost:5000         Acts as data    │
+│                                             store for       │
+│                                            both services    │
+│                                                               │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Docker Troubleshooting
+
+**Images still building after 10+ minutes:**
+```bash
+docker-compose logs -f
+# Watch for specific error messages
+```
+
+**Frontend shows "Failed to load products":**
+- Backend may still be starting. Wait 1-2 more minutes
+- Check: `docker-compose logs -f backend`
+
+**Port already in use (3000, 5000, or 27017):**
+Edit `docker-compose.yml`:
+```yaml
+services:
+  mongo:
+    ports:
+      - '27018:27017'  # Change first number
+  backend:
+    ports:
+      - '5001:5000'    # Change first number
+  frontend:
+    ports:
+      - '3001:3000'    # Change first number
+```
+
+**Reset everything to fresh state:**
+```bash
+docker-compose down -v
+docker system prune -a
+docker-compose up --build
+```
+
+## Local Development (Without Docker)
+
+### Setup Steps
+
+1. **Ensure MongoDB is running:**
    ```bash
-   cd E-commerce_assign
+   # Option A: Use Docker for just MongoDB
+   docker run -d -p 27017:27017 --name ecommerce-mongo mongo:6.0
+   
+   # Option B: Use local MongoDB installation
+   mongod
    ```
-
-2. **Start all services:**
-   ```bash
-   docker-compose up --build
-   ```
-
-   This command will:
-   - Build the frontend and backend images
-   - Start MongoDB and seed it with sample products
-   - Start the Express backend server
-   - Start the Next.js frontend server
-
-3. **Access the application:**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:5000
-   - MongoDB: localhost:27017
-
-4. **Stop all services:**
-   ```bash
-   docker-compose down
-   ```
-
-### Local Development (Without Docker)
-
-1. **Start MongoDB locally** (or in a separate container)
 
 2. **Backend setup:**
    ```bash
    cd backend
    npm install
-   node seed.js
    npm run dev
    ```
+   
+   Backend runs on `http://localhost:5000`
 
 3. **Frontend setup** (in a new terminal):
    ```bash
@@ -115,6 +214,19 @@ These are pre-configured in the Docker setup.
    npm install
    npm run dev
    ```
+   
+   Frontend runs on `http://localhost:3000`
+
+### Environment Variables for Local Development
+
+Create `.env` file in backend directory:
+```
+MONGODB_URI=mongodb://localhost:27017/ecommerce
+PORT=5000
+NODE_ENV=development
+```
+
+Frontend automatically uses `http://localhost:5000` as the API URL.
 
 ## Usage
 
@@ -158,4 +270,3 @@ Ensure the `mongo` service is fully healthy before the backend starts (Docker Co
 ### Frontend Cannot Connect to Backend
 Verify the `NEXT_PUBLIC_API_URL` environment variable is correctly set to `http://backend:5000` in Docker Compose
 
-# Products-Cart_Next.js
