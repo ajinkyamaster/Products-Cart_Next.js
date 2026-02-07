@@ -20,57 +20,6 @@ The application is intentionally scoped to essential features, focusing on clean
 - **Containerization**: Docker, Docker Compose
 - **State Management**: React Context API
 
-## Project Structure
-
-```
-E-commerce_assign/
-├── frontend/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── layout.js          # Root layout with providers
-│   │   │   ├── page.js            # Home/Products page
-│   │   │   └── cart/
-│   │   │       └── page.js        # Cart page
-│   │   ├── components/
-│   │   │   ├── Header.js          # Navigation header
-│   │   │   ├── ProductGrid.js     # Products display
-│   │   │   └── Cart.js            # Cart display
-│   │   ├── context/
-│   │   │   └── CartContext.js     # Cart state management
-│   │   ├── services/
-│   │   │   └── api.js             # API client functions
-│   │   └── styles/
-│   │       ├── globals.css        # Global styles
-│   │       ├── Header.module.css  # Header styles
-│   │       ├── Products.module.css # Products styles
-│   │       └── Cart.module.css    # Cart styles
-│   ├── package.json
-│   ├── next.config.js
-│   ├── jsconfig.json
-│   └── Dockerfile
-├── backend/
-│   ├── models/
-│   │   └── Product.js             # MongoDB product schema
-│   ├── controllers/
-│   │   ├── productController.js   # Product business logic
-│   │   └── cartController.js      # Cart business logic
-│   ├── routes/
-│   │   ├── productRoutes.js       # Product endpoints
-│   │   └── cartRoutes.js          # Cart endpoints
-│   ├── middleware/
-│   │   ├── validation.js          # Request validation
-│   │   └── errorHandler.js        # Error handling
-│   ├── config/
-│   │   └── database.js            # MongoDB connection
-│   ├── app.js                     # Express app setup
-│   ├── server.js                  # Server entry point
-│   ├── seed.js                    # Database seeding
-│   ├── package.json
-│   ├── .env                       # Environment variables
-│   └── Dockerfile
-└── docker-compose.yml             # Multi-container orchestration
-```
-
 ## Features
 
 ### Frontend
@@ -183,7 +132,6 @@ These are pre-configured in the Docker setup.
 - **Modular Architecture**: Clear separation of concerns with dedicated folders for models, controllers, routes
 - **Meaningful Naming**: Descriptive names for files, functions, and variables
 - **Responsive Design**: CSS media queries for mobile, tablet, and desktop
-- **Human-Written Code**: All code follows professional standards and is free from auto-generated patterns
 - **No UI Libraries**: Pure CSS Modules for styling without external UI frameworks
 
 ## Constraints & Scope
@@ -210,6 +158,4 @@ Ensure the `mongo` service is fully healthy before the backend starts (Docker Co
 ### Frontend Cannot Connect to Backend
 Verify the `NEXT_PUBLIC_API_URL` environment variable is correctly set to `http://backend:5000` in Docker Compose
 
-## Author
-Assignment-grade e-commerce module demonstrating professional full-stack development practices.
 # Products-Cart_Next.js
