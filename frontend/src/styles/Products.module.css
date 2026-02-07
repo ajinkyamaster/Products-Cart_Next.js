@@ -1,0 +1,133 @@
+.productsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.productsTitle {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.productCard {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.productCard:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.productImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  background-color: #f5f5f5;
+}
+
+.productInfo {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.productName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.productPrice {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.addButton {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  margin-top: auto;
+}
+
+.addButton:hover {
+  background-color: #333;
+}
+
+.addButton:active {
+  background-color: #000;
+}
+
+.loadingMessage {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  padding: 2rem;
+}
+
+.errorMessage {
+  text-align: center;
+  color: #d32f2f;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 900px) {
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .productsContainer {
+    padding: 1.5rem 1rem;
+  }
+
+  .productsTitle {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .productInfo {
+    padding: 1rem;
+  }
+
+  .productName {
+    font-size: 0.95rem;
+  }
+
+  .productPrice {
+    font-size: 1.1rem;
+  }
+
+  .addButton {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}
