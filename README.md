@@ -186,37 +186,6 @@ docker system prune -a
 docker-compose up --build
 ```
 
-## Local Development (Without Docker)
-
-### Setup Steps
-
-1. **Ensure MongoDB is running:**
-   ```bash
-   # Option A: Use Docker for just MongoDB
-   docker run -d -p 27017:27017 --name ecommerce-mongo mongo:6.0
-   
-   # Option B: Use local MongoDB installation
-   mongod
-   ```
-
-2. **Backend setup:**
-   ```bash
-   cd backend
-   npm install
-   npm run dev
-   ```
-   
-   Backend runs on `http://localhost:5000`
-
-3. **Frontend setup** (in a new terminal):
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-   
-   Frontend runs on `http://localhost:3000`
-
 ### Environment Variables for Local Development
 
 Create `.env` file in backend directory:
